@@ -37,8 +37,9 @@ export default {
                         this.user.data=user_data.data;
                         localStorage.setItem('user_data',JSON.stringify(user_data.data))
                         this.user.authenticated = true
+                        
 
-                        context.$router.push('/admin')
+                        context.$router.push('/account')
                         
                       })
                       .catch(e => {

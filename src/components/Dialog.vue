@@ -1,6 +1,6 @@
 <template>
         <div id='kibana' class="" >
-        <iframe src="http://159.203.76.103/rimay/dialogo" height="1100" width="100%"></iframe>
+        <iframe :src="url" height="1100" width="100%"></iframe>
       </div>
 </template>
 
@@ -11,10 +11,11 @@ import config from '../../config/appconfig.js';
 export default {
   name: 'hello',
 
-  data: () => ({
-    posts: [],
-    errors: []
-  }),
+  data() {
+      return {
+        url:config.url_dialogo
+      }
+  },
 
   methods: {
     

@@ -1,24 +1,25 @@
 <template>
 <div class="container">
+
     <div class="row">
-        <div class="col-xs-12 col-sm-6 col-md-6">
+        <div class=" col-md-12">
+          <div class="alert alert-danger" v-if="error">
+                                    <p>{{ error }}</p>
+                                  </div>
             <div class="well well-sm">
                 <div class="row">
-                    <div class="col-sm-6 col-md-4">
+                    <div class=" col-md-4">
                         <img src="http://placehold.it/380x500" alt="" class="img-rounded img-responsive" />
                     </div>
                     <div class="col-sm-6 col-md-8">
-                        <h4>{{user.data.First_name}} {{user.data.Last_name}}</h4>
                         
-                        <small><cite title="San Francisco, USA">{{user.data.Usuario_tipo.Tipo}} <i class="glyphicon glyphicon-map-marker">
+                        <h3>{{user.data.First_name}} {{user.data.Last_name}}</h3>
                         
-                        </i></cite></small>
+                        <cite title="San Francisco, USA">{{user.data.Usuario_tipo.Tipo}} </cite>
                         <p>
                             <i class="glyphicon glyphicon-envelope"></i>{{user.data.Mail}}
                             <br />
-                            <i class="glyphicon glyphicon-globe"></i><a href="http://www.jquery2dotnet.com">www.jquery2dotnet.com</a>
-                            <br />
-                            <i class="glyphicon glyphicon-gift"></i>June 02, 1988</p>
+                           </p>
                         <!-- Split button -->
                         <div class="btn-group">
                            
@@ -27,35 +28,43 @@
                   
        
                         </div>
+
+                        <div  v-show="isShow" id="formpass">
+                                
+
+                                  <div class="alert alert-success" v-if="success">
+                                    <p>{{ success }}</p>
+                                  </div>
+
+
+                              <div class="form-group">
+                                <label for="usr" >Contraseña Actual:</label>
+                                <input type="password" class="form-control" ref="pass" v-on:keyup="userinput">
+                              </div>
+                             
+                              <div class="form-group">
+                              <label for="usr">Nueva Contraseña:</label>
+                               <input type="password" class="form-control" ref="newpass" v-on:keyup="userinput" >
+                              </div>
+                             
+                              <div class="form-group">
+                                <label for="usr">Re-Ingrese Nueva Contraseña:</label>
+                              <input type="password" class="form-control" ref="renewpass" v-on:keyup="userinput">
+                              </div>
+
+                                <div class="btn-group">
+                                               <button v-on:click="savePass()" type="button" class="btn btn-primary" :disabled="validated ? disabled : ''">
+                                                            Guardar Cambios</button>
+
+                                  </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-<div  v-show="isShow" id="formpass">
-  <div class="form-group">
-    <label for="usr">Contraseña Actual:</label>
-    <input type="text" class="form-control" ref="pass">
-  </div>
- 
-  <div class="form-group">
-  <label for="usr">Nueva Contraseña:</label>
-   <input type="text" class="form-control" ref="newpass">
-  </div>
- 
-  <div class="form-group">
-    <label for="usr">Re-Ingrese Nueva Contraseña:</label>
-  <input type="text" class="form-control" ref="renewpass">
-  </div>
-
-    <div class="btn-group">
-                   <button v-on:click="savePass()" type="button" class="btn btn-primary">
-                                Guardar Cambios</button>
-                  
-       
-            </div>
-
-</div>
+      
 
 </div>
 
@@ -70,44 +79,66 @@ console.log(config.server)
 
 export default {
   name: 'Account',
+  
 
   data(){
 
       return {
+        // userinput: '',
         isShow:false,
-        user: auth.user
+        user: auth.user,
+        error:undefined,
+        success:undefined,
+        validated:false
       }  
     },
+    watch: {
+    
+  },
 
   methods: {
+   userinput: function() {
+
+      if(this.$refs.renewpass.value.length>0&&this.$refs.newpass.value.length>0&&this.$refs.pass.value.length>0)
+        this.validated=true;
+      else
+        this.validated=false;
+     },
     changeState: function () {
    
       this.isShow=true;
    
       },
     savePass: function () {
-   
+      
         console.log("Salvando Password2");
         
+        //Si el passwor antiguo esta no vacio
         if(this.$refs.pass.value){
+          console.log(this.user.data)
 
+          //Si los password nuevos coinciden
           if(this.$refs.newpass.value==this.$refs.renewpass.value){
 
-                axios.put(config.server_api+"usuario/",{headers:token})
-                      .then((user_data) => {
-
-                        console.log("data USer:", user_data.data)
-                        this.user.data=user_data.data;
-                        localStorage.setItem('user_data',JSON.stringify(user_data.data))
-                        this.user.authenticated = true
-
-                        context.$router.push('/admin')
+              // Si coincide con password antiguop
+              if(this.user.data.Password==this.$refs.pass.value){
+     
+                var token=auth.getAuthHeader();
+                  axios.put(config.server_api+"usuario/"+this.user.data.Id,{"Password":this.$refs.renewpass.value},{headers:token})
+                      .then((response) => {
+                        this.success="Ok"
                         
                       })
                       .catch(e => {
-                        context.error=e.response.data.message
+                        this.error=e.response.data.message
                     })
+              }
           }
+          else{
+            this.error="Your password and confirmation password do not match"
+          }
+        }else{
+          this.error="Ingrese Password"
         }
         
    
