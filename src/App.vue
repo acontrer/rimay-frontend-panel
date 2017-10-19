@@ -5,12 +5,14 @@
         <ul class="nav navbar-nav ">
         <li><a v-link="'secretquote'"  @click="account()" v-if="user.authenticated">Mis Datos</a></li>
           <li><a v-link="'login'" @click="login()"  v-if="!user.authenticated">Login</a></li>
-          <li><a v-link="'secretquote'"  @click="admin()" v-if="user.data.Usuario_tipos_id=='1'">Usuarios</a></li>
+          <li><a v-link="'secretquote'"  @click="admin()" v-if="user.isAdmin">Usuarios</a></li>
 
-          
-          <li><a v-link="'secretquote'"  @click="dashboard()" v-if="user.data.Usuario_tipos_id=='1'">Panel Gráfico</a></li>
-          <li><a v-link="'secretquote'"  @click="dialog()" v-if="user.data.Usuario_tipos_id=='1'">Panel de Diálogo</a></li>
-          <li><a v-link="'secretquote'"  @click="files()" v-if="user.data.Usuario_tipos_id=='1'">Archivos</a></li>
+          <li><a v-link="'secretquote'"  @click="dashboard()" v-if="user.isAdmin">Panel Gráfico</a></li>
+          <li><a v-link="'secretquote'"  @click="dialog()" v-if="user.isAdmin">Panel de Diálogo</a></li>
+          <li><a v-link="'secretquote'"  @click="files()" v-if="user.isAdmin">Archivos</a></li>
+
+
+
           <li><a v-link="'login'" v-if="user.authenticated" @click="logout()">Salir</a></li>
         </ul>
       </div>

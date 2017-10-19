@@ -13,7 +13,8 @@ export default {
 
   // User object will let us check authentication status
   user: {
-    authenticated: false
+    authenticated: false,
+    isAdmin: false
   },
 
   login(context, creds, redirect) {
@@ -37,7 +38,12 @@ export default {
                         this.user.data=user_data.data;
                         localStorage.setItem('user_data',JSON.stringify(user_data.data))
                         this.user.authenticated = true
-                        
+                        console.log("--..--..--..--..--")
+                        console.log(user_data.data.Usuario_tipos_id)
+                        if(user_data.data.Usuario_tipos_id==1)
+                         this.user.isAdmin=true;
+                        else
+                          this.user.isAdmin=false;
 
                         context.$router.push('/account')
                         
@@ -67,6 +73,7 @@ export default {
     localStorage.removeItem('id_token')
     localStorage.removeItem('access_token')
     this.user.authenticated = false
+    this.user.isAdmin=false
   },
 
   checkAuth() {
@@ -77,11 +84,13 @@ export default {
     if(jwt) {
         this.user.data=JSON.parse(localStorage.getItem('user_data'));
         this.user.authenticated = true
+        this.user.isAdmin=true;
 
 
     }
     else {
       this.user.authenticated = false      
+      this.user.isAdmin=false;
     }
     return this.user.authenticated;
   },

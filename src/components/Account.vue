@@ -3,13 +3,18 @@
 
     <div class="row">
         <div class=" col-md-12">
-          <div class="alert alert-danger" v-if="error">
-                                    <p>{{ error }}</p>
-                                  </div>
+            
+            <div class="alert alert-danger" v-if="error">
+                <p>{{ error }}</p>
+              </div>
+            <div class="alert alert-success" v-if="success">
+                <p>{{ success }}</p>
+            </div>
+
             <div class="well well-sm">
                 <div class="row">
                     <div class=" col-md-4">
-                        <img src="http://placehold.it/380x500" alt="" class="img-rounded img-responsive" />
+                        <img src="../assets/avatar.png" alt="" class="img-rounded img-responsive" />
                     </div>
                     <div class="col-sm-6 col-md-8">
                         
@@ -32,9 +37,6 @@
                         <div  v-show="isShow" id="formpass">
                                 
 
-                                  <div class="alert alert-success" v-if="success">
-                                    <p>{{ success }}</p>
-                                  </div>
 
 
                               <div class="form-group">
@@ -97,7 +99,7 @@ export default {
   },
 
   methods: {
-   userinput: function() {
+    userinput: function() {
 
       if(this.$refs.renewpass.value.length>0&&this.$refs.newpass.value.length>0&&this.$refs.pass.value.length>0)
         this.validated=true;
@@ -111,7 +113,7 @@ export default {
       },
     savePass: function () {
       
-        console.log("Salvando Password2");
+       
         
         //Si el passwor antiguo esta no vacio
         if(this.$refs.pass.value){
@@ -126,12 +128,15 @@ export default {
                 var token=auth.getAuthHeader();
                   axios.put(config.server_api+"usuario/"+this.user.data.Id,{"Password":this.$refs.renewpass.value},{headers:token})
                       .then((response) => {
-                        this.success="Ok"
+                        this.success="Password was changed"
                         
                       })
                       .catch(e => {
                         this.error=e.response.data.message
                     })
+              }
+              else{
+                  this.error="Bad password"
               }
           }
           else{

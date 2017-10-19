@@ -48,27 +48,33 @@ export default {
         var newTipo;
         if(this.posts[key]["Usuario_tipo"]["Id"]!=3){
 
-          switch(this.posts[key]["Usuario_tipo"]["Id"]){
-            case 2:
-                newTipoId=4;
-                newTipo="Administrador"
-                newAction="Remover de Administrador"
 
-              
-            break;
+          switch(this.posts[key]["Usuario_tipo"]["Id"]){
+           
+           // Si es Admin -> Remover De Admin
             case 1:
               newTipoId=2;
               newTipo="Usuario"
               newAction="Agregar como Administrador"
               
             break;
+
+            // Si es Usuario -> Agregar Como Admin
+            case 2:
+                newTipoId=1;
+                newTipo="Administrador"
+                newAction="Remover de Administradores"            
+            break;
+
+            
+            // Si es Invitado -> Habilitar Usuario
             case 4:
               newTipoId=2;
               newTipo="Usuario"
-              newAction="Agregar como Administrador"
+              newAction="Agregar Como Administrador"
               
             break;
-        }
+         }
         // }
           axios.put(config.server_api+"usuario/"+ss,
           { "Usuario_tipos_id": newTipoId},
@@ -78,6 +84,7 @@ export default {
               this.posts[key]["Usuario_tipo"]["Tipo"]=newTipo
               this.posts[key]["Usuario_tipo"]["Id"]=newTipoId
               this.posts[key]["action"]=newAction
+              setButton(this.posts[key]);
             
           })
           .catch(e => {
@@ -96,29 +103,9 @@ export default {
       if(ob1.Mail=='')
         ob1.Mail="---";
       
-     console.log("ass  saldkjalks ")
 
-      switch(ob1.Usuario_tipo.Id){
-        case 1:
-           ob1.action="Remover de Administradores";
-           ob1.typeUser="userAdmin";
-           ob1.typeUserBtn="btn-danger";
-           ob1.typeUserBtnIcon="fa-minus-circle";
-        break;
-        case 2:
-           ob1.action="Agregar como Administrador";
-           ob1.typeUser="userNormal";
-           ob1.typeUserBtn="btn-info";
-           ob1.typeUserBtnIcon="fa-plus-circle";
-        break;
 
-        case 4:
-           ob1.action="Habilitar Usuario";
-           ob1.typeUser="userInProcess";
-           ob1.typeUserBtn="btn-default";
-           ob1.typeUserBtnIcon="fa-check-circle-o";
-        break;
-      }
+        setButton(ob1);
 
        if(ob1.Usuario_tipo.Tipo!="Bot")
         out.push(ob1)
@@ -137,7 +124,33 @@ export default {
 
 
 
+function setButton(ob1){
+  
+        switch(ob1.Usuario_tipo.Id){
+        
+        case 1:
+           ob1.action="Remover de Administradores";
+           ob1.typeUser="userAdmin";
+           ob1.typeUserBtn="btn-danger";
+           ob1.typeUserBtnIcon="fa-minus-circle";
+        break;
+       
+        case 2:
+           ob1.action="Agregar como Administrador";
+           ob1.typeUser="userNormal";
+           ob1.typeUserBtn="btn-info";
+           ob1.typeUserBtnIcon="fa-plus-circle";
+        break;
 
+        case 4:
+           ob1.action="Habilitar Usuario";
+           ob1.typeUser="userInProcess";
+           ob1.typeUserBtn="btn-default";
+           ob1.typeUserBtnIcon="fa-check-circle-o";
+        break;
+      }
+
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
