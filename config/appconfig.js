@@ -1,4 +1,4 @@
-var host='http://159.203.76.103/';
+var host='http://rimay.usach.cl/';
 export default {
   server: host+'',
   server_api: host+'api/',
