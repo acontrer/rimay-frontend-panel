@@ -1,6 +1,6 @@
 // src/auth/index.js
 
-import {router} from '../index'
+// import {router} from '../index'
 import config from '../../config/appconfig.js';
 // URL and endpoint constants
 const API_URL = config.server_api;
