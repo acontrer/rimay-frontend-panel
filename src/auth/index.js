@@ -83,8 +83,13 @@ export default {
     var access_token=localStorage.getItem('access_token')
     if(jwt) {
         this.user.data=JSON.parse(localStorage.getItem('user_data'));
+        console.log(this.user.data)
         this.user.authenticated = true
-        this.user.isAdmin=true;
+
+        if(this.user.data.Usuario_tipos_id==1)
+          this.user.isAdmin=true;
+        else
+          this.user.isAdmin=false;
 
 
     }
