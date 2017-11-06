@@ -66,30 +66,32 @@ export default {
                 newAction="Remover de Administradores"            
             break;
 
-            
             // Si es Invitado -> Habilitar Usuario
             case 4:
               newTipoId=2;
               newTipo="Usuario"
               newAction="Agregar Como Administrador"
-              
+              habilitarUsuario(this.posts[key]);
             break;
          }
         // }
+        
           axios.put(config.server_api+"usuario/"+ss,
           { "Usuario_tipos_id": newTipoId},
-          {headers:{'content-type': 'application/json'}})
-          .then(response => {
+          {
+            headers:{'content-type': 'application/json'}})
+            .then(response => {
 
-              this.posts[key]["Usuario_tipo"]["Tipo"]=newTipo
-              this.posts[key]["Usuario_tipo"]["Id"]=newTipoId
-              this.posts[key]["action"]=newAction
-              setButton(this.posts[key]);
-            
-          })
-          .catch(e => {
-            this.errors.push(e)
-          })
+                this.posts[key]["Usuario_tipo"]["Tipo"]=newTipo
+                this.posts[key]["Usuario_tipo"]["Id"]=newTipoId
+                this.posts[key]["action"]=newAction
+                setButton(this.posts[key]);
+              
+            })
+            .catch(e => {
+              this.errors.push(e)
+            })
+          
       }
       }
     },
@@ -122,8 +124,20 @@ export default {
   }
 }
 
+function habilitarUsuario(ob){
 
+   axios.post(config.email_service,
+          { "email": ob.Mail},
+          {headers:{'content-type': 'application/json'}})
+          .then(response => {
+            
+          })
+          .catch(e => {
+            console.log(e)
+            this.errors.push(e)
+          })
 
+}
 function setButton(ob1){
   
         switch(ob1.Usuario_tipo.Id){

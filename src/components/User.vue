@@ -24,6 +24,7 @@
 <script>
 import Vue from 'vue'
 import axios from 'axios';
+import config from '../../config/appconfig.js';
 export default {
   name: 'hello',
 
@@ -50,7 +51,7 @@ export default {
             newTipo="Invitado"
           }
 
-          axios.put('http://159.203.76.103/api/usuario/'+ss,
+          axios.put(config.server_api+'/usuario/'+ss,
           { "Usuario_tipos_id": newTipoId},
           {headers:{'content-type': 'application/json'}})
           .then(response => {
@@ -66,7 +67,7 @@ export default {
       }
     },
   created() {
-    axios.get('http://159.203.76.103/api/usuario/')
+    axios.get(config.server_api+'/usuario/')
     .then(response => {
      
      var out=[]

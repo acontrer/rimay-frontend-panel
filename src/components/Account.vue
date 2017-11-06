@@ -160,7 +160,7 @@ export default {
 
 </script>
 <style>
-body{padding-top:30px;}
+
 
 .glyphicon {  margin-bottom: 10px;margin-right: 10px;}
 

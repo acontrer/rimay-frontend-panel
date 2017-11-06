@@ -10,6 +10,7 @@
           <li><a v-link="'secretquote'"  @click="dashboard()" v-if="user.isAdmin">Panel Gráfico</a></li>
           <li><a v-link="'secretquote'"  @click="dialog()" v-if="user.isAdmin">Panel de Diálogo</a></li>
           <li><a v-link="'secretquote'"  @click="files()" v-if="user.isAdmin">Archivos</a></li>
+          <li><a v-link="'secretquote'"  @click="reports()" v-if="user.isAdmin">Reportes</a></li>
 
 
 
@@ -55,7 +56,10 @@
       files() {
        this.$router.push('/files')
       },
-     account() {
+      reports() {
+       this.$router.push('/reports')
+      },
+      account() {
        this.$router.push('/account')
       }
     }

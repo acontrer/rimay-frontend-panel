@@ -23,6 +23,7 @@ h1,h2,h3,h4{
   color:#08365c;
 }
 body {
+  
     font-family: Open Sans,Helvetica,Arial,sans-serif;
     font-size:14px;
     color: #444;
@@ -100,9 +101,9 @@ a {
 }
 
 .content {
-  width: 90%;
+  width: 100%;
   margin: 0 auto;
-  margin-bottom: 5%;
+  /*margin-bottom: 5%;*/
   min-height: 70%;
   padding-bottom: 60px;
 }

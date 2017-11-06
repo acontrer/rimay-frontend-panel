@@ -7,6 +7,7 @@ import Dashboard from '@/components/Dashboard'
 import Dialog from '@/components/Dialog'
 import Account from '@/components/Account'
 import Files from '@/components/Files'
+import Reports from '@/components/Reports'
 import auth from '../auth'
 
 Vue.use(Router)
@@ -65,6 +66,18 @@ export default new Router({
       path: '/dialog',
       name: 'Dialog',
       component: Dialog,
+      beforeEnter: (to, from, next) => {
+
+          if(auth.checkAuth())
+            next()
+          else
+            next({ path: '/login' })
+      }
+    },
+    {
+      path: '/reports',
+      name: 'Reports',
+      component: Reports,
       beforeEnter: (to, from, next) => {
 
           if(auth.checkAuth())
