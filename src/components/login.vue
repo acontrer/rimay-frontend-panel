@@ -1,5 +1,5 @@
 <template>
-    <div class="col-sm-4 col-sm-offset-4">
+    <div class="col-md-4 col-md-offset-4">
       <h2>Iniciar Sesión</h2>
       <p>Ingresa los datos de tu cuenta.</p>
       <div class="alert alert-danger" v-if="error">
