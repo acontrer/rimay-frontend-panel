@@ -9,7 +9,7 @@
         <input
           type="text"
           class="form-control"
-          placeholder="Enter your username"
+          placeholder="Enter your email"
           v-model="credentials.username"
         >
       </div>

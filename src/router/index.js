@@ -8,6 +8,7 @@ import Dialog from '@/components/Dialog'
 import Account from '@/components/Account'
 import Files from '@/components/Files'
 import Reports from '@/components/Reports'
+import Emergencies from '@/components/Emergencies'
 import auth from '../auth'
 
 Vue.use(Router)
@@ -18,6 +19,18 @@ export default new Router({
       path: '/admin',
       name: 'Admin',
       component: Admin,
+      beforeEnter: (to, from, next) => {
+
+          if(auth.checkAuth())
+            next()
+          else
+            next({ path: '/login' })
+      }
+    },
+    {
+      path: '/emergencies',
+      name: 'Emergencies',
+      component: Emergencies,
       beforeEnter: (to, from, next) => {
 
           if(auth.checkAuth())
@@ -89,13 +102,28 @@ export default new Router({
     {
       path: '/login',
       name: 'Login',
-      component: Login
+      component: Login,
+      // beforeEnter: (to, from, next) => {
+
+      //     if(auth.checkAuth())
+      //       next({ path: '/admin' })
+      //     else
+      //       next({ path: '/login' })
+      // }
     }
     ,
     {
       path: '/',
       name: 'Login',
-      component: Login
+      component: Login,
+      // beforeEnter: (to, from, next) => {
+
+      //     if(auth.checkAuth())
+      //       next({ path: '/admin' })
+      //     else
+      //       next({ path: '/login' })
+      // }
+
     }
 
   ]

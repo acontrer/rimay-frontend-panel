@@ -11,7 +11,6 @@ import axios from 'axios'
 
 export default {
 
-  // User object will let us check authentication status
   user: {
     authenticated: false,
     isAdmin: false

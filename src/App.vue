@@ -11,6 +11,7 @@
           <li><a v-link="'secretquote'"  @click="dialog()" v-if="user.isAdmin">Panel de Diálogo</a></li>
           <li><a v-link="'secretquote'"  @click="files()" v-if="user.isAdmin">Archivos</a></li>
           <li><a v-link="'secretquote'"  @click="reports()" v-if="user.isAdmin">Reportes</a></li>
+          <li><a v-link="'secretquote'"  @click="emergencies()" v-if="user.isAdmin">Emergencias</a></li>
 
 
 
@@ -61,6 +62,9 @@
       },
       account() {
        this.$router.push('/account')
+      },
+      emergencies() {
+       this.$router.push('/emergencies')
       }
     }
   }

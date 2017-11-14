@@ -4,18 +4,25 @@
     <table  class="" >
         <th>Identificador</th>      
         <th>Nombre</th>
+        <th>Institución</th>
         <th>E-mail</th>
         <th>Username</th>
         <th>Tipo de usuario</th>
+        <th>Acción</th>
         <th>Acción</th>
       <tr v-for="item , key in posts">      
 
         <td :class=item.typeUser>{{ item.Id }}</td>      
         <td :class=item.typeUser>{{ item.First_name }} {{item.Last_name}}</td>
+        <td :class=item.typeUser>{{ item.Institucion }}</td>
+
         <td :class=item.typeUser>{{ item.Mail }}</td>
         <td :class=item.typeUser>{{ item.Username }}</td>
         <td v-bind:class="'type '+item.typeUser">{{ item.Usuario_tipo.Tipo }}</td>
         <td v-bind:class="item.typeUser"><a v-bind:class="'btn  btn-block '+item.typeUserBtn"  v-on:click="changeState(item.Id,key)"><i v-bind:class="'fa  '+item.typeUserBtnIcon" aria-hidden="true"></i>{{ item.action }}</a></td>
+       
+        <td v-bind:class="item.typeUser"><a v-bind:class="'btn  btn-block'"   v-on:click="disableUser(item.Id,key)"><i v-bind:class="" aria-hidden="true"></i>Desactivar Usuario</a><a v-bind:class="'btn  btn-block'"   v-on:click="deleteUser(item.Id,key)"><i v-bind:class="" aria-hidden="true"></i>Eliminar Usuario</a></td>
+       
 
 
      
@@ -42,6 +49,44 @@ export default {
   }),
 
   methods: {
+  disableUser: function (ss,key) {
+        var newTipoId;
+        var newAction;
+        var newTipo;
+
+        
+          axios.put(config.server_api+"usuario/"+ss,
+          { "Usuario_tipos_id": 5},
+          {
+            headers:{'content-type': 'application/json'}})
+            .then(response => {
+
+              
+            })
+            .catch(e => {
+              this.errors.push(e)
+            })
+          
+      },
+  deleteUser: function (ss,key) {
+        var newTipoId;
+        var newAction;
+        var newTipo;
+
+        
+          axios.put(config.server_api+"usuario/"+ss,
+          { "Usuario_tipos_id": 6},
+          {
+            headers:{'content-type': 'application/json'}})
+            .then(response => {
+
+              
+            })
+            .catch(e => {
+              this.errors.push(e)
+            })
+          
+      },
     changeState: function (ss,key) {
         var newTipoId;
         var newAction;
@@ -109,7 +154,7 @@ export default {
 
         setButton(ob1);
 
-       if(ob1.Usuario_tipo.Tipo!="Bot")
+       if(ob1.Usuario_tipo.Tipo!="Bot"&&ob1.Usuario_tipo.Tipo!="Eliminado")
         out.push(ob1)
     })
       
